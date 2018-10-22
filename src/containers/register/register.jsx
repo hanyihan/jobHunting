@@ -33,11 +33,11 @@ class Register extends Component {
 	}
 	render(){
 		const {type} = this.state;
-		// const {msg, redirectTo} = this.props.user;
+		const {msg, redirectTo} = this.props.user;
 
-		// if(redirectTo) {
-		// 	return <Redirect to={redirectTo}></Redirect>
-		// }
+		if(redirectTo) {
+			return <Redirect to={redirectTo}></Redirect>
+		}
 		return(
 			<div>
 				<NavBar>
@@ -46,7 +46,7 @@ class Register extends Component {
 				<Logo></Logo>
 				<WingBlank>
 					<List>
-						{/* {msg? <div className="error-msg">{msg}</div> : null} */}
+						{msg? <div className="error-msg">{msg}</div> : null}
 						<WhiteSpace></WhiteSpace>
 						<InputItem placeholder="请输入用户名" onChange={val => this.handleChange('username',val)}>
 								用户名：
