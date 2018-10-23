@@ -1,12 +1,11 @@
 //登录页面路由
-
 import React,{Component} from 'react';
 import { NavBar, List, InputItem,WingBlank, WhiteSpace,Button} from 'antd-mobile';
 
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-
-import {Login} from '../../redux/actions';
+import {login} from '../../redux/actions';
+import '../../assets/css/index.less';
 import Logo from '../../components/logo/logo';
 
 class Login extends Component {
@@ -20,8 +19,8 @@ class Login extends Component {
 	}
 
 	login = () => {
-		//console.log(this.state);
-		this.props.Login(this.state);
+		//console.log(this.props);
+		this.props.login(this.state);
 	}
 
 	toRegister = () => {
@@ -63,5 +62,5 @@ class Login extends Component {
 }
 
 export default connect(
-	state => state.user,{Login}
+	state => state.user,{login}
 )(Login)

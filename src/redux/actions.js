@@ -6,13 +6,13 @@ const errorMsg = (msg) => ({type:ERROR_MSG,data:msg});
 const authSuccess = (user) => ({type:AUTH_SUCCESS,data:user});
 
     // 异步注册
-export function register({username,password,password2,type}) {
+export const register = ({username,password,password2,type}) => {
     if(!username || !password || !password2) {
         return errorMsg('用户名密码必须输入');
         
     }
     if(password !== password2) {
-        return errorMsg('两次密码输入不一致')；
+        return errorMsg('两次密码输入不一致');
     }
 
 
@@ -32,7 +32,7 @@ export function register({username,password,password2,type}) {
 }
 
  // 异步登录
-export const Login = ({username,password}) => {
+export const login = ({username,password}) => {
     if(!username || !password) {
         return errorMsg('请输入用户名密码');
     }

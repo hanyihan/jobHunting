@@ -6,6 +6,7 @@ import { NavBar, Radio,List, InputItem,WingBlank, WhiteSpace,Button} from 'antd-
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {register} from '../../redux/actions';
+import '../../assets/css/index.less';
 import Logo from '../../components/logo/logo';
 
 const ListItem = List.Item;
@@ -28,7 +29,7 @@ class Register extends Component {
 	}
 
 	register = () => {
-		//console.log(JSON.stringify(this.state));
+		console.log(this.props);
 		this.props.register(this.state);
 	}
 	render(){
