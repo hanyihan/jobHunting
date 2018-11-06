@@ -1,7 +1,7 @@
 import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER} from './action-types';
 
 // import {reqRegister,reqLogin} from '../api/index';
-import {reqRegister,reqLogin,reqUpdateUser} from '../api/index';
+import {reqRegister,reqLogin,reqUpdateUser, reqUser} from '../api/index';
 
 const errorMsg = (msg) => ({type:ERROR_MSG,data:msg});
 const authSuccess = (user) => ({type:AUTH_SUCCESS,data:user});
@@ -59,12 +59,39 @@ export const updateUser = ((user) => {
     return async dispatch => {
         // 发送异步ajax 请求
         const response = await reqUpdateUser(user);
+
         const result = response.data;
         if(result.code === 0) {//更新成功
-            dispatch(receiveUser(result.user));
+            dispatch(receiveUser(result.data));
         }
         else {
             dispatch(resetUser(result.msg));
         }
     }
 })
+
+
+// 异步获取状态
+
+export const getUser = () => {
+    return async dispatch => {
+        const response = await reqUser();
+        const result = response.data;
+        if(result.code === 0) {
+            dispatch(receiveUser(result.data));
+        }
+        else {
+            dispatch(resetUser(result.msg));
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+

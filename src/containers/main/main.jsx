@@ -15,6 +15,10 @@ import Personal from '../personal/personal';
 import NotFound from '../not-found/not-found';
 import NavFooter from '../../components/nav-footer/nav-footer';
 
+import {getUser} from '../../redux/actions';
+import {getRedirectPath} from '../../utils/index'
+
+
 class Main extends Component {
 // 组件类和组件对象
 	// 给组件对象添加属性
@@ -31,7 +35,7 @@ class Main extends Component {
 			component:Dashen,
 			title:'职位列表',
 			icon:'laoban',
-			text:'职位列表'
+			text:'职位'
 		},
 		{
 			path:'/message',
@@ -50,16 +54,47 @@ class Main extends Component {
 	
 	]
 
+	componentDidMount(){
+		// 登陆过(cookie中有userid), 但没有有登陆(redux管理的user中没有_id) 发请求获取对应的user:
+		const userid = Cookies.get('userid');
+		const {user} = this.props;
+		if(userid && !user._id) {
+			this.props.getUser();
+		}
+	}
+
 	
 	render() {
+		// 得到当前请求的path
+		const pathname = this.props.location.pathname;
+		// 判断用户是否已登录过
 		const userid = Cookies.get('userid');
-		if(!userid) {
+		if(!userid) {//没有登陆过，跳转到登录界面
 			return <Redirect to='/login'></Redirect>
 			
+		}
+		const {user} = this.props;
+		if(!user._id) {
+			return null;
 		}	
+		else {
+			if(pathname === '/') {
+				const path = getRedirectPath(user.type,user.header);
+				return <Redirect to={path}></Redirect>
+			}
+			if(user.type === 'laoban') {
+				this.navList[1].hide = true;
+			}
+			else {
+				this.navList[0].hide = true;
+			}
+		}
+
+		const currentNav = this.navList.find(nav => nav.path === pathname);
 
 		return (
 			<div>
+				{currentNav?<NavBar className='stick-top'>{currentNav.title}</NavBar>:null}
 				<Switch>
 					<Route path='/laobaninfo' component={LaobanInfo}/>
 					<Route path='/dasheninfo' component={DashenInfo}/>
@@ -70,6 +105,7 @@ class Main extends Component {
 					<Route component={NotFound}/>
 					
 				</Switch>
+				{currentNav? <NavFooter unReadCount={this.props.unReadCount} navList = {this.navList}></NavFooter>:null}
 			</div>
 		)
 		
@@ -77,5 +113,6 @@ class Main extends Component {
 }
 
 export default connect(
-	state => ({user: state.user})
+	state => ({user: state.user}),
+	{getUser}
 )(Main)

@@ -5,7 +5,7 @@ import React,{Component} from 'react';
 export default class Laoban extends Component {
     render() {
         return (
-            <div>老板列表</div>
+            <div>这是老板的路由，应该现实的是大神的列表信息！</div>
         )
     }
 }

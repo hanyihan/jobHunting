@@ -8,7 +8,7 @@ class NotFound extends Component {
         return (
             <div>
                 <h2>页面丢了~~</h2>
-                <Button onClick = {() => this.props.history.replace("/")}>返回首页</Button>
+                <Button type='primary' onClick = {() => this.props.history.replace("/")}>返回首页</Button>
             </div>
         )
     }
