@@ -8,18 +8,19 @@ export default class HeaderSelectors extends Component {
     }
 
     state = {
-        icon:null
+        icon:null //图片对象，默认没有值
     }
     
     constructor(props) {
         super(props);
-        const headerList = [];
+        this.headerList = [];
+        // 将头像图片加载
         for(var i = 0; i < 20; i++) {
             const text = `头像${i+1}`;
-            this.headerList.push({text,icon:require(`../../assets/imgs/${text}.png`)});
+            this.headerList.push({text,icon:require(`../../assets/imgs/headers/${text}.png`)});
         }
     }
-
+    //选择头像
     selectHeader = ({icon,text}) => {
         this.setState({icon});
         this.props.setHeader(text);

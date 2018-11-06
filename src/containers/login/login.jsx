@@ -40,7 +40,7 @@ class Login extends Component {
 				<WingBlank>
 					{msg? <div className="error-msg"></div>:null}
 					<List>
-						{/* {msg? <div className="error-msg">{msg}</div> : null} */}
+						{msg? <div className="error-msg">{msg}</div> : null}
 						<WhiteSpace></WhiteSpace>
 						<InputItem placeholder="请输入用户名" onChange={val => this.handleChange('username',val)}>
 								用户名：
