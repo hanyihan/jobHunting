@@ -6,5 +6,13 @@ export const ERROR_MSG = 'ERROR_MSG';
 export const RECEIVE_USER = 'RECEIVE_USER';
 // 重置用户
 export const RESET_USER = 'RESET_USER';
+// 接受用户列表
+export const RECEIVE_USER_List = 'RECEIVE_USER_List';
+// 接收消息列表
+export const RECEIVE_MSG_LIST = 'RECEIVE_MSG_LIST';
+// 接收一条消息
+export const RECEIVE_MSG = 'RECEIVE_MSG';
+// 标识消息已读
+export const MSG_READ = 'MSG_READ';
 
 

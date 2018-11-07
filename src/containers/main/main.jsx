@@ -92,6 +92,7 @@ class Main extends Component {
 
 		const currentNav = this.navList.find(nav => nav.path === pathname);
 
+		const unReadCount = this.props.unReadCount;
 		return (
 			<div>
 				{currentNav?<NavBar className='stick-top'>{currentNav.title}</NavBar>:null}
@@ -105,7 +106,7 @@ class Main extends Component {
 					<Route component={NotFound}/>
 					
 				</Switch>
-				{currentNav? <NavFooter unReadCount={this.props.unReadCount} navList = {this.navList}></NavFooter>:null}
+				{currentNav? <NavFooter unReadCount={unReadCount} navList = {this.navList}></NavFooter>:null}
 			</div>
 		)
 		
@@ -113,6 +114,6 @@ class Main extends Component {
 }
 
 export default connect(
-	state => ({user: state.user}),
+	state => ({user: state.user,unReadCount: state.chat.unReadCount}),
 	{getUser}
 )(Main)
