@@ -8,7 +8,7 @@ import Register from './containers/register/register';
 import Login from './containers/login/login';
 import Main from './containers/main/main';
 
-import './test/socketio_test';
+// import './test/socketio_test';
 ReactDOM.render((
     <Provider store={store}>
     <HashRouter>

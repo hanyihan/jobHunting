@@ -45,36 +45,55 @@ function userList(state = initUserList,action) {
 }
 
 // 管理聊天相关信息数据的reducer
+// function chat (state=initChat,action) {
+//     switch(action.type) {
+//         case RECEIVE_MSG_LIST:
+//             const {users,chatMsgs} = action.data;
+//             return {
+//                 users,
+//                 chatMsgs,
+//                 unReadCount:0
+//             }
+//         case RECEIVE_MSG:
+//             return 0;
+//         default:
+//             return state;
+//     }
+// }
 function chat(state=initChat,action) {
     switch(action.type) {
-        case RECEIVE_MSG:
-            var {chatMsg,userid} = action.data;
-            return {
-                chatMsgs: [...state.chatMsgs,chatMsg],
-                users:state.users,
-                unReadCount:state.unReadCount + (!chatMsg.read && chatMsg.to === userid?1:0)
-            }
         case RECEIVE_MSG_LIST:
-            var {chatMsgs,users,userid} = action.data;
+            const {chatMsgs,users,userid} = action.data;
             return {
                 chatMsgs,
                 users,
-                unReadCount: chatMsgs.reduce((preTotal,msg) => {
-                    return preTotal + (!msg.read && msg.to === userid?1:0);
-                },0)
+                unReadCount: chatMsgs.reduce((preTotal,msg) => preTotal + (!msg.read && msg.to === userid ? 1 : 0),0)
             }
-        case MSG_READ:
-            const {count,from, to} = action.data;
+        case RECEIVE_MSG:
+            const {chatMsg} = action.data;
             return {
+                users: state.users,
+                chatMsgs: [...state.chatMsgs, chatMsg],
+                unReadCount: state.unReadCount + (!chatMsg.read&&chatMsg.to===action.data.userid?1:0)
+              }
+        case MSG_READ:
+            const {from, to,count} = action.data;
+            
+            state.chatMsgs.forEach(msg => {
+                if(msg.from === from && msg.to === to && !msg.read) {
+                    msg.read = true;
+                }
+            })
+            return {
+                users: state.users,
                 chatMsgs: state.chatMsgs.map(msg => {
                     if(msg.from === from && msg.to === to && !msg.read) {
-                        return {...msg,read:true}
+                        return {...msg, read:true}
                     }
                     else {
                         return msg;
                     }
                 }),
-                users: state.users,
                 unReadCount: state.unReadCount-count
             }
         default:

@@ -14,6 +14,7 @@ import Message from '../message/message';
 import Personal from '../personal/personal';
 import NotFound from '../not-found/not-found';
 import NavFooter from '../../components/nav-footer/nav-footer';
+import Chat from '../../containers/chat/chat';
 
 import {getUser} from '../../redux/actions';
 import {getRedirectPath} from '../../utils/index'
@@ -73,7 +74,7 @@ class Main extends Component {
 			return <Redirect to='/login'></Redirect>
 			
 		}
-		const {user} = this.props;
+		const {user,unReadCount} = this.props;
 		if(!user._id) {
 			return null;
 		}	
@@ -89,20 +90,22 @@ class Main extends Component {
 				this.navList[0].hide = true;
 			}
 		}
-
+		const {navList} = this;
 		const currentNav = this.navList.find(nav => nav.path === pathname);
 
-		const unReadCount = this.props.unReadCount;
 		return (
 			<div>
 				{currentNav?<NavBar className='stick-top'>{currentNav.title}</NavBar>:null}
 				<Switch>
+					{navList.map(nav => <Route key={nav.path} path={nav.path} component={nav.component}/>)}
 					<Route path='/laobaninfo' component={LaobanInfo}/>
 					<Route path='/dasheninfo' component={DashenInfo}/>
-					<Route path='/dashen' component={Dashen}/>
+					{/* <Route path='/dashen' component={Dashen}/>
 					<Route path='/laoban' component={Laoban}/>
 					<Route path='/message' component={Message}/>
-					<Route path='/personal' component={Personal}/>
+					<Route path='/personal' component={Personal}/> */}
+					<Route path='/chat/:userid' component={Chat}/>
+					
 					<Route component={NotFound}/>
 					
 				</Switch>

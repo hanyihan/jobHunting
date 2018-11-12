@@ -18,14 +18,15 @@ class NavFooter extends Component {
         const navList = this.props.navList.filter(nav => !nav.hide);//回调函数返回值为true，当前元素留下，否则不留
         // 当前请求的路径
         const {pathname} = this.props.location;
+        const {unReadCount} = this.props;
 
         return (
             <div>
                 <TabBar>
                     {
-                        navList.map((nav,index) => (
+                        navList.map((nav) => (
                             <Item key = {nav.path}
-                                  badge={nav.path === '/message'? this.props.unReadCount:0}
+                                  badge={nav.path === '/message'? unReadCount : 0}
                                   title={nav.text}
                                   icon={{uri:require(`./images/${nav.icon}.png`)}}
                                   selectedIcon = {{uri:require(`./images/${nav.icon}-selected.png`)}}

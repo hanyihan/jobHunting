@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, WingBlank, WhiteSpace } from 'antd-mobile';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import QueueAnim from 'rc-queue-anim';
 
 class UserList extends React.Component {
     static propsTypes = {
@@ -9,11 +11,12 @@ class UserList extends React.Component {
     render() {
         return (
             <WingBlank style={{marginTop:50,marginBottom:50}}>
+            <QueueAnim type='scale'>
                 {
                     this.props.userList.map(user => (
                         <div key={user._id}>
                             <WhiteSpace></WhiteSpace>
-                            <Card>
+                            <Card onClick={() => this.props.history.push(`/chat/${user._id}`)}>
                                 <Card.Header
                                     thumb={user.header ? require(`../../assets/imgs/headers/头像1.png`) : null}
                                     extra={<span>{user.username}</span>}
@@ -44,10 +47,11 @@ class UserList extends React.Component {
                     </Card>
                     <WhiteSpace />
                 </div> */}
+            </QueueAnim>
             </WingBlank>
 
         )
     }
 }
 
-export default UserList;
+export default withRouter(UserList);
